@@ -1,0 +1,28 @@
+Map<String, String[]> params = request.getParameterMap();
+		String paramString = "{";
+		for (Map.Entry<String, String[]> entry: params.entrySet()) {
+			String key = entry.getKey().toString();
+			paramString += "\""+key+"\":";
+			String[] value = entry.getValue();
+			if(value != null && value.length>1) {
+				paramString += "[";
+				for (int i = 0; i < value.length; i++) {
+					paramString += "\""+value[i]+"\"";
+					if(i != value.length-1) {
+						paramString += ",";
+					}
+				}
+				paramString += "]";
+			}else {
+				if(null == value) {
+					paramString += "\"\"";
+				}else {
+					paramString += "\""+ value[0] +"\"";
+				}
+			}
+			paramString += ",";
+		}
+		if(!StringUtils.isBlank(paramString) && paramString.length() > 1) {
+			paramString = paramString.substring(0, paramString.length()-1);
+		}
+		paramString += "}";
